@@ -21,6 +21,19 @@ version = "3.4"
 
 [[package]]
 category = "main"
+description = ""
+name = "roboviz"
+optional = false
+python-versions = "*"
+version = "0.1"
+
+[package.source]
+reference = ""
+type = "directory"
+url = "submodules/PyRoboViz"
+
+[[package]]
+category = "main"
 description = "Simple and lightweight module for working with RPLidar laser scanners"
 name = "rplidar"
 optional = false
@@ -31,10 +44,11 @@ version = "0.9.2"
 pyserial = "*"
 
 [metadata]
-content-hash = "97468c2bd18191b1c85df75d5aabfb790d86a5e1bb0e4a76c6158474b8d6921d"
+content-hash = "3197189084a26c28375ac49dc079a105830496da58e0e40f6dfaff8cf66948f1"
 python-versions = "^3.8"
 
 [metadata.hashes]
 breezyslam = []
 pyserial = ["6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627", "e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8"]
+roboviz = []
 rplidar = ["2799f85feb1d46943cdeb0ad5dc5fe8482e6ab1b20ae6367668b608fb76552e4"]

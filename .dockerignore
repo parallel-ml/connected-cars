@@ -3,5 +3,6 @@
 .mypy_cache/
 docker/
 scripts/
+dependencies/unpacked/
 poetry.lock
 pyproject.toml

@@ -1,6 +1,6 @@
 [[package]]
 category = "main"
-description = ""
+description = "Simple, efficient SLAM in Python"
 name = "breezyslam"
 optional = false
 python-versions = "*"
@@ -8,8 +8,8 @@ version = "0.1"
 
 [package.source]
 reference = ""
-type = "directory"
-url = "submodules/BreezySLAM/python"
+type = "file"
+url = "dependencies/breezyslam-0.1.tar.gz"
 
 [[package]]
 category = "main"
@@ -29,8 +29,8 @@ version = "0.1"
 
 [package.source]
 reference = ""
-type = "directory"
-url = "submodules/PyRoboViz"
+type = "file"
+url = "dependencies/roboviz-0.1.tar.gz"
 
 [[package]]
 category = "main"
@@ -44,11 +44,11 @@ version = "0.9.2"
 pyserial = "*"
 
 [metadata]
-content-hash = "3197189084a26c28375ac49dc079a105830496da58e0e40f6dfaff8cf66948f1"
+content-hash = "35b0f2aa34b579a6f5df0b2086f99a1f05dfa3cffed384784df8554e0a7c8a86"
 python-versions = "^3.8"
 
 [metadata.hashes]
-breezyslam = []
+breezyslam = ["68684c4c4281eed4fba64cb572050a299d3a045508352a04a4394d3c97599e48"]
 pyserial = ["6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627", "e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8"]
-roboviz = []
+roboviz = ["8cff64edb0bd6c2f3160dbc609e2d3b34e7ef1d9479a8172b4bd29c932dacc12"]
 rplidar = ["2799f85feb1d46943cdeb0ad5dc5fe8482e6ab1b20ae6367668b608fb76552e4"]

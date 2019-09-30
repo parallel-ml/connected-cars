@@ -1,10 +1,12 @@
-ARG BASE_IMAGE=arm32v7/alpine
-ARG BASE_IMAGE_VERSION=3.10
+ARG BASE_IMAGE=balenalib/raspberrypi3-alpine
+ARG BASE_IMAGE_VERSION=latest
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
+
+RUN [ "cross-build-start" ]
 
 # install python
 RUN apk add --no-cache python3 \
-    && ln -s /usr/local/bin/python /usr/bin/python3
+    && ln -s /usr/bin/python3 /usr/local/bin/python
 
 # install pip
 RUN apk add --no-cache --virtual .build-deps curl \
@@ -12,11 +14,16 @@ RUN apk add --no-cache --virtual .build-deps curl \
     && python get-pip.py \
     && apk del .build-deps
 
+# print python version
+RUN python3 --version
+
 # copy all files
 COPY . .
 
 # install dependencies
 RUN pip install --requirement requirements.txt
+
+RUN [ "cross-build-end" ]
 
 # run the app
 CMD python app.py

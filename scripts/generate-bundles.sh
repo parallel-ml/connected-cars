@@ -3,12 +3,11 @@
 mkdir -p dependencies
 
 pushd submodules/BreezySLAM/python/
-python setup.py sdist --formats=gztar
+python setup.py bdist_wheel
 mv ./dist/*.tar.gz ../../../dependencies/
 popd
 
 pushd submodules/PyRoboViz/
-python setup.py sdist --formats=gztar
-python setup.py sdist --formats=gztar
+python setup.py bdist_wheel
 mv ./dist/*.tar.gz ../../dependencies/
 popd

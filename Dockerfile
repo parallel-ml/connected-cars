@@ -2,7 +2,7 @@ ARG BASE_IMAGE=balenalib/raspberrypi3-alpine
 ARG BASE_IMAGE_VERSION=latest
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-RUN [ "cross-build-start" ]
+RUN ["cross-build-start"]
 
 # install python
 RUN apk add --no-cache python3 \
@@ -19,12 +19,15 @@ RUN apk add --no-cache --virtual .pip-build-deps curl \
 WORKDIR /app
 COPY . .
 
-# install dependencies
+# install system dependencies
+RUN apk add --no-cache py3-numpy freetype-dev libpng-dev openblas-dev
+
+# install python dependencies
 RUN apk add --no-cache --virtual .build-deps alpine-sdk python3-dev \
     && pip install --requirement requirements.txt \
     && apk del .build-deps
 
-RUN [ "cross-build-end" ]
+RUN ["cross-build-end"]
 
 # run the app
 CMD python app.py

@@ -14,9 +14,6 @@ RUN apk add --no-cache --virtual .pip-build-deps curl \
     && python get-pip.py \
     && apk del .pip-build-deps
 
-# print python version
-RUN python3 --version
-
 # copy all files
 COPY . .
 

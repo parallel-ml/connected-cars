@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-MAP_SIZE_PIXELS = 500
-MAP_SIZE_METERS = 10
-LIDAR_DEVICE = "/dev/ttyUSB0"
+import os
+
+MAP_SIZE_PIXELS = int(os.environ.get("SLAM_MAP_SIZE_PIXELS", "500"))
+MAP_SIZE_METERS = int(os.environ.get("SLAM_MAP_SIZE_METERS", "10"))
+LIDAR_DEVICE = os.environ.get("SLAM_LIDAR_DEVICE", "/dev/ttyUSB0")
 
 
 # Ideally we could use all 250 or so samples that the RPLidar delivers in one
 # scan, but on slower computers you'll get an empty map and unchanging position
 # at that rate.
-MIN_SAMPLES = 200
+MIN_SAMPLES = int(os.environ.get("SLAM_MIN_SAMPLES", "200"))
 
 from breezyslam.algorithms import RMHC_SLAM
 from breezyslam.sensors import RPLidarA1 as LaserModel
@@ -43,7 +45,6 @@ if __name__ == "__main__":
     next(iterator)
 
     while True:
-
         # Extract (quality, angle, distance) triples from current scan
         items = [item for item in next(iterator)]
 

@@ -23,7 +23,7 @@ COPY . .
 # install dependencies
 RUN apk add --no-cache --virtual .build-deps alpine-sdk python3-dev \
     && pip install --requirement requirements.txt \
-    && apk del .build-dependencies
+    && apk del .build-deps
 
 RUN [ "cross-build-end" ]
 

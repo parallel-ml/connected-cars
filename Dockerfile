@@ -9,10 +9,10 @@ RUN apk add --no-cache python3 \
     && ln -s /usr/bin/python3 /usr/local/bin/python
 
 # install pip
-RUN apk add --no-cache --virtual .build-deps curl \
+RUN apk add --no-cache --virtual .pip-build-deps curl \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python get-pip.py \
-    && apk del .build-deps
+    && apk del .pip-build-deps
 
 # print python version
 RUN python3 --version
@@ -21,7 +21,9 @@ RUN python3 --version
 COPY . .
 
 # install dependencies
-RUN pip install --requirement requirements.txt
+RUN apk add --no-cache --virtual .build-deps alpine-sdk python3-dev \
+    && pip install --requirement requirements.txt \
+    && apk del .build-dependencies
 
 RUN [ "cross-build-end" ]
 

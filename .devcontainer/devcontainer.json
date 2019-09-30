@@ -1,0 +1,14 @@
+{
+    "name": "Python 3",
+    "image": "nimashoghi/python",
+    "runArgs": [
+        "--privileged",
+        "-v",
+        "//wsl$/Ubuntu/var/run/docker.sock:/var/run/docker.sock"
+    ],
+    "postCreateCommand": "fish ./.devcontainer/start.fish",
+    "extensions": [
+        "ms-python.python",
+        "visualstudioexptteam.vscodeintellicode"
+    ]
+}

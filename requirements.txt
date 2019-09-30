@@ -1,0 +1,6 @@
+-e submodules/BreezySLAM/python
+pyserial==3.4 \
+    --hash=sha256:6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627 \
+    --hash=sha256:e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8
+rplidar==0.9.2 \
+    --hash=sha256:2799f85feb1d46943cdeb0ad5dc5fe8482e6ab1b20ae6367668b608fb76552e4

@@ -1,4 +1,4 @@
-import json
+import base64
 import os
 
 from flask import Flask, request
@@ -20,6 +20,6 @@ def submit_data():
         request.data["x"],
         request.data["y"],
         request.data["theta"],
-        bytearray(json.loads(request.data["mapbytes"])),
+        bytearray(base64.decodebytes(request.data["mapbytes"])),
     ):
         exit(0)

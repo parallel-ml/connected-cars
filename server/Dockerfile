@@ -1,11 +1,14 @@
 FROM python:alpine
 
-# copy all files
-WORKDIR /app
-COPY . .
+# install numpy and matplotlib
+RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing py3-matplotlib py3-numpy
 
 # install python dependencies
 RUN pip install --requirement requirements.txt
+
+# copy all files
+WORKDIR /app
+COPY . .
 
 # flask app name
 ENV FLASK_APP=app.py

@@ -1,4 +1,4 @@
-import json
+import base64
 import multiprocessing as mp
 import os
 
@@ -18,12 +18,11 @@ SERVER_URL = os.environ.get("SLAM_SERVER_URL", "http://localhost:8080")
 def send_info_target(x, y, theta, mapbytes):
     requests.post(
         f"{SERVER_URL}/submit_data",
-        data={"x": x, "y": y, "theta": theta, "mapbytes": json.dumps(mapbytes)},
+        data={"x": x, "y": y, "theta": theta, "mapbytes": base64.encodebytes(mapbytes)},
     )
 
 
 def send_info(x, y, theta, mapbytes):
-
     mp.Process(target=send_info_target, args=(x, y, theta, mapbytes)).start()
 
 

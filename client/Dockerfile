@@ -15,14 +15,14 @@ RUN apk add --no-cache --virtual .pip-build-deps curl \
     && rm get-pip.py \
     && apk del .pip-build-deps
 
-# copy all files
-WORKDIR /app
-COPY . .
-
 # install python dependencies
 RUN apk add --no-cache --virtual .build-deps alpine-sdk python3-dev \
     && pip install --requirement requirements.txt \
     && apk del .build-deps
+
+# copy all files
+WORKDIR /app
+COPY . .
 
 RUN ["cross-build-end"]
 

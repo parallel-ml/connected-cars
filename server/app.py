@@ -16,10 +16,11 @@ viz = MapVisualizer(MAP_SIZE_PIXELS, MAP_SIZE_METERS, "SLAM")
 
 @app.route("/submit_data", methods=["POST"])
 def submit_data():
+    print(request.form["x"], request.form["y"], request.form["theta"])
     if not viz.display(
-        request.data["x"],
-        request.data["y"],
-        request.data["theta"],
-        bytearray(base64.decodebytes(request.data["mapbytes"])),
+        float(request.form["x"]),
+        float(request.form["y"]),
+        float(request.form["theta"]),
+        bytearray(base64.b64decode(request.form["mapbytes"])),
     ):
         exit(0)

@@ -19,9 +19,6 @@ RUN apk add --no-cache --virtual .pip-build-deps curl \
 WORKDIR /app
 COPY . .
 
-# install system dependencies
-RUN apk add --no-cache py3-numpy freetype-dev libpng-dev openblas-dev
-
 # install python dependencies
 RUN apk add --no-cache --virtual .build-deps alpine-sdk python3-dev \
     && pip install --requirement requirements.txt \

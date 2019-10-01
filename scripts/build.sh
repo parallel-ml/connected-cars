@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-# build app
-docker build --rm -f "Dockerfile" -t nimashoghi/lidar-slam:latest .
+# build client
+docker build --rm -f "./client/Dockerfile" -t nimashoghi/lidar-slam-client:latest ./client/
+
+# build server
+docker build --rm -f "./server/Dockerfile" -t nimashoghi/lidar-slam-server:latest ./server/

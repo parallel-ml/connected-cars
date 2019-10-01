@@ -1,32 +1,38 @@
-#!/usr/bin/env python3
-
+import json
+import multiprocessing as mp
 import os
+
+import requests
+from rplidar import RPLidar as Lidar
+
+from breezyslam.algorithms import RMHC_SLAM
+from breezyslam.sensors import RPLidarA1 as LaserModel
 
 MAP_SIZE_PIXELS = int(os.environ.get("SLAM_MAP_SIZE_PIXELS", "500"))
 MAP_SIZE_METERS = int(os.environ.get("SLAM_MAP_SIZE_METERS", "10"))
 LIDAR_DEVICE = os.environ.get("SLAM_LIDAR_DEVICE", "/dev/ttyUSB0")
-
-
-# Ideally we could use all 250 or so samples that the RPLidar delivers in one
-# scan, but on slower computers you'll get an empty map and unchanging position
-# at that rate.
 MIN_SAMPLES = int(os.environ.get("SLAM_MIN_SAMPLES", "200"))
+SERVER_URL = os.environ.get("SLAM_SERVER_URL", "http://localhost:8080")
 
-from breezyslam.algorithms import RMHC_SLAM
-from breezyslam.sensors import RPLidarA1 as LaserModel
-from rplidar import RPLidar as Lidar
-from roboviz import MapVisualizer
 
-if __name__ == "__main__":
+def send_info_target(x, y, theta, mapbytes):
+    requests.post(
+        f"{SERVER_URL}/submit_data",
+        data={"x": x, "y": y, "theta": theta, "mapbytes": json.dumps(mapbytes)},
+    )
 
+
+def send_info(x, y, theta, mapbytes):
+
+    mp.Process(target=send_info_target, args=(x, y, theta, mapbytes)).start()
+
+
+def main():
     # Connect to Lidar unit
     lidar = Lidar(LIDAR_DEVICE)
 
     # Create an RMHC SLAM object with a laser model and optional robot model
     slam = RMHC_SLAM(LaserModel(), MAP_SIZE_PIXELS, MAP_SIZE_METERS)
-
-    # Set up a SLAM display
-    viz = MapVisualizer(MAP_SIZE_PIXELS, MAP_SIZE_METERS, "SLAM")
 
     # Initialize an empty trajectory
     trajectory = []
@@ -68,10 +74,12 @@ if __name__ == "__main__":
         # Get current map bytes as grayscale
         slam.getmap(mapbytes)
 
-        # Display map and robot pose, exiting gracefully if user closes it
-        if not viz.display(x / 1000.0, y / 1000.0, theta, mapbytes):
-            exit(0)
+        send_info(x / 1000.0, y / 1000.0, theta, mapbytes)
 
     # Shut down the lidar connection
     lidar.stop()
     lidar.disconnect()
+
+
+if __name__ == "__main__":
+    main()

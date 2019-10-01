@@ -1,7 +1,3 @@
-.git/
-.devcontainer/
 .mypy_cache/
-docker/
-scripts/
 poetry.lock
 pyproject.toml

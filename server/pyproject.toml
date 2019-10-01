@@ -1,16 +1,13 @@
 [tool.poetry]
-name = "lidar-slam"
+name = "lidar-slam-server"
 version = "0.1.0"
 description = ""
 authors = ["Nima Shoghi <nimashoghi@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-breezyslam = { path = "./submodules/BreezySLAM/python/" }
+python = "^3.7"
+flask = "^1.1.1"
 roboviz = { path = "./submodules/PyRoboViz/" }
-rplidar = "^0.9.2"
-matplotlib = "^3.1.1"
-numpy = "^1.17.2"
 
 [tool.poetry.dev-dependencies]
 

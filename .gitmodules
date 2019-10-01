@@ -1,6 +1,6 @@
-[submodule "submodules/BreezySLAM"]
-	path = submodules/BreezySLAM
+[submodule "client/submodules/BreezySLAM"]
+	path = client/submodules/BreezySLAM
 	url = https://github.com/nimashoghi/BreezySLAM.git
-[submodule "submodules/PyRoboViz"]
-	path = submodules/PyRoboViz
+[submodule "server/submodules/PyRoboViz"]
+	path = server/submodules/PyRoboViz
 	url = https://github.com/nimashoghi/PyRoboViz.git

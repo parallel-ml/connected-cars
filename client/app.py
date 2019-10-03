@@ -3,7 +3,6 @@ import base64
 import multiprocessing as mp
 import os
 import struct
-from concurrent.futures.process import ProcessPoolExecutor
 
 import requests
 import websockets
@@ -21,18 +20,8 @@ MAP_SIZE_METERS = int(os.environ.get("SLAM_MAP_SIZE_METERS", "10"))
 MAP_BYTES_SIZE = int(MAP_SIZE_PIXELS * MAP_SIZE_PIXELS)
 STRUCT_FORMAT = f"<fff{MAP_BYTES_SIZE}s"
 
-async def send_info(x, y, theta, mapbytes):
+async def main():
     async with websockets.connect(SERVER_URL) as websocket:
-        packed = struct.pack(STRUCT_FORMAT, x, y, theta, mapbytes)
-        websocket.send(packed)
-
-def send_info_process(x, y, theta, mapbytes):
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(send_info(x, y, theta, mapbytes))
-
-def main():
-    with ProcessPoolExecutor(5) as executor:
         # Connect to Lidar unit
         lidar = Lidar(LIDAR_DEVICE)
 
@@ -79,7 +68,7 @@ def main():
             # Get current map bytes as grayscale
             slam.getmap(mapbytes)
 
-            mp.Process(target=send_info_process, args=(x, y, theta, mapbytes)).start()
+            await websocket.send(struct.pack(STRUCT_FORMAT, x, y, theta, mapbytes))
 
         # Shut down the lidar connection
         lidar.stop()
@@ -87,4 +76,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

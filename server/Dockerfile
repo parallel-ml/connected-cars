@@ -9,6 +9,9 @@ RUN apk add --no-cache curl python3 \
 # install numpy and matplotlib
 RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing py3-matplotlib py3-numpy
 
+# install py3-qt5
+RUN apk add --no-cache py3-qt5
+
 # copy all files
 WORKDIR /app
 COPY . .
@@ -20,4 +23,4 @@ RUN pip install --requirement requirements.txt
 ENV FLASK_APP=app.py
 
 # run the app
-CMD flask run
+CMD flask run -h 0.0.0.0 -p 5000

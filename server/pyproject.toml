@@ -6,8 +6,8 @@ authors = ["Nima Shoghi <nimashoghi@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-flask = "^1.1.1"
 roboviz = { path = "./submodules/PyRoboViz/" }
+websockets = "^8.0.2"
 
 [tool.poetry.dev-dependencies]
 

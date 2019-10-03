@@ -33,8 +33,6 @@ def send_info_process(x, y, theta, mapbytes):
 
 def main():
     with ProcessPoolExecutor(5) as executor:
-        event_loop = asyncio.get_event_loop()
-
         # Connect to Lidar unit
         lidar = Lidar(LIDAR_DEVICE)
 

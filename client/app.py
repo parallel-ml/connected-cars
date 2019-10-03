@@ -13,7 +13,7 @@ from breezyslam.algorithms import RMHC_SLAM
 from breezyslam.sensors import RPLidarA1 as LaserModel
 
 LIDAR_DEVICE = os.environ.get("SLAM_LIDAR_DEVICE", "/dev/ttyUSB0")
-MIN_SAMPLES = int(os.environ.get("SLAM_MIN_SAMPLES", "200"))
+MIN_SAMPLES = int(os.environ.get("SLAM_MIN_SAMPLES", "100"))
 SERVER_URL = os.environ.get("SLAM_SERVER_URL", "ws://localhost:80")
 
 MAP_SIZE_PIXELS = int(os.environ.get("SLAM_MAP_SIZE_PIXELS", "500"))
@@ -79,7 +79,7 @@ def main():
             # Get current map bytes as grayscale
             slam.getmap(mapbytes)
 
-            mp.Process(target=send_info_process,args=(x,y,theta,mapbytes)).start()
+            mp.Process(target=send_info_process, args=(x, y, theta, mapbytes)).start()
 
         # Shut down the lidar connection
         lidar.stop()

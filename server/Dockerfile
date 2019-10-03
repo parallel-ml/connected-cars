@@ -19,8 +19,5 @@ COPY . .
 # install python dependencies
 RUN pip install --requirement requirements.txt
 
-# flask app name
-ENV FLASK_APP=app.py
-
 # run the app
-CMD flask run -h 0.0.0.0 -p 5000
+CMD python app.py

@@ -20,8 +20,13 @@ MAP_SIZE_METERS = int(os.environ.get("SLAM_MAP_SIZE_METERS", "10"))
 MAP_BYTES_SIZE = int(MAP_SIZE_PIXELS * MAP_SIZE_PIXELS)
 STRUCT_FORMAT = f"<fff{MAP_BYTES_SIZE}s"
 
+
 async def main():
-    async with websockets.connect(SERVER_URL) as websocket:
+    async with websockets.connect(SERVER_URL,
+        max_size=None,
+        max_queue=None,
+        ping_interval=None,
+        ping_timeout=None) as websocket:
         # Connect to Lidar unit
         lidar = Lidar(LIDAR_DEVICE)
 
@@ -68,7 +73,13 @@ async def main():
             # Get current map bytes as grayscale
             slam.getmap(mapbytes)
 
-            await websocket.send(struct.pack(STRUCT_FORMAT, x, y, theta, mapbytes))
+            while True:
+                try:
+                    await websocket.send(struct.pack(STRUCT_FORMAT, x, y, theta, mapbytes))
+                except:
+
+                else:
+                    break
 
         # Shut down the lidar connection
         lidar.stop()

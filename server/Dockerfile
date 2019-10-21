@@ -20,4 +20,4 @@ COPY . .
 RUN pip install --requirement requirements.txt
 
 # run the app
-CMD python app.py
+CMD python3 app.py

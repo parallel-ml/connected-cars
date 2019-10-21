@@ -15,6 +15,7 @@ STRUCT_FORMAT = f"<fff{MAP_BYTES_SIZE}s"
 # Set up a SLAM display
 viz = MapVisualizer(MAP_SIZE_PIXELS, MAP_SIZE_METERS, "SLAM")
 
+
 async def data_handler(websocket, path):
     data = await websocket.recv()
     while data:
@@ -27,5 +28,16 @@ async def data_handler(websocket, path):
 
 
 if __name__ == "__main__":
-    start_server = websockets.serve(data_handler, host="0.0.0.0")
-    asyncio.run(start_server)
+    start_server = websockets.serve(
+        data_handler,
+        host="0.0.0.0",
+        port=8765,
+        max_size=None,
+        max_queue=None,
+        ping_interval=None,
+        ping_timeout=None,
+    )
+
+    event_loop = asyncio.get_event_loop()
+    event_loop.run_until_complete(start_server)
+    event_loop.run_forever()
